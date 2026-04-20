@@ -58,6 +58,29 @@
     @media (max-width: 480px) {
       .weather-card { width: 100%; max-width: 320px; }
     }
+    /* Forecast strip */
+    .forecast {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin: 1rem auto 0;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .forecast-day {
+      background: var(--light-bg);
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+      min-width: 88px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(44,62,80,0.06);
+    }
+
+    .forecast-day .day { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.2rem; }
+    .forecast-day .f-emoji { font-size: 1.25rem; margin-bottom: 0.2rem; }
+    .forecast-day .hi { font-weight: 700; color: var(--primary-color); }
+    .forecast-day .lo { font-size: 0.85rem; color: var(--text-light); }
   </style>
 </head>
 <body>
@@ -94,10 +117,12 @@
           </div>
         </div>
         <div class="weather-meta">
-          <div id="weather-location">Loc: --</div>
+          <div id="weather-location">—</div>
           <div id="weather-time">—</div>
         </div>
       </div>
+      <!-- 5-day forecast -->
+      <div id="weather-forecast" class="forecast" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -236,16 +261,14 @@
     </div>
   </footer>
   <script>
-    // Weather widget: uses Open-Meteo current_weather (no API key)
+    // Weather widget: 5-day forecast + reverse geocoding (Open-Meteo)
     (function(){
       const emojiMap = (code) => {
-        // Open-Meteo / WMO weather codes
         if (code === 0) return '☀️';
         if ([1,2].includes(code)) return '🌤️';
         if (code === 3) return '☁️';
         if ([45,48].includes(code)) return '🌫️';
-        if ([51,53,55,56,57,80,81,82].includes(code)) return '🌧️';
-        if ([61,63,65,66,67].includes(code)) return '🌧️';
+        if ([51,53,55,56,57,80,81,82,61,63,65,66,67].includes(code)) return '🌧️';
         if ([71,73,75,77,85,86].includes(code)) return '❄️';
         if ([95,96,99].includes(code)) return '⛈️';
         return '🌤️';
@@ -269,7 +292,9 @@
         $('weather-desc').textContent = message;
         $('weather-temp').textContent = '--°F';
         $('weather-emoji').textContent = '❓';
-        $('weather-location').textContent = 'Loc: —';
+        $('weather-location').textContent = '—';
+        $('weather-forecast').setAttribute('aria-hidden','true');
+        $('weather-forecast').innerHTML = '';
       }
 
       function updateWidget(data, lat, lon) {
@@ -280,16 +305,56 @@
         $('weather-temp').textContent = temp + '°F';
         $('weather-emoji').textContent = emojiMap(code);
         $('weather-desc').textContent = descMap(code);
-        $('weather-location').textContent = `Lat:${lat.toFixed(2)}, Lon:${lon.toFixed(2)}`;
         const t = new Date(cw.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         $('weather-time').textContent = t;
+        // Forecast
+        if (data.daily) updateForecast(data.daily);
+      }
+
+      function updateForecast(daily) {
+        const container = $('weather-forecast');
+        container.innerHTML = '';
+        const times = daily.time;
+        const max = daily.temperature_2m_max;
+        const min = daily.temperature_2m_min;
+        const codes = daily.weathercode;
+        // show next 5 days (or less if not available)
+        const count = Math.min(5, times.length);
+        for (let i=0;i<count;i++){
+          const day = new Date(times[i]).toLocaleDateString([], {weekday:'short'});
+          const hi = Math.round(max[i]);
+          const lo = Math.round(min[i]);
+          const code = codes[i];
+          const el = document.createElement('div');
+          el.className = 'forecast-day';
+          el.innerHTML = `<div class="day">${day}</div><div class="f-emoji">${emojiMap(code)}</div><div class="hi">${hi}°</div><div class="lo">${lo}°</div>`;
+          container.appendChild(el);
+        }
+        container.removeAttribute('aria-hidden');
+      }
+
+      function fetchReverseGeocode(lat, lon) {
+        const gurl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&count=1`;
+        fetch(gurl).then(r=>r.json()).then(json=>{
+          if (json && json.results && json.results.length){
+            const p = json.results[0];
+            const name = p.name + (p.admin1 ? ', '+p.admin1 : '') + (p.country ? ', '+p.country : '');
+            $('weather-location').textContent = name;
+          } else {
+            $('weather-location').textContent = `Lat:${lat.toFixed(2)}, Lon:${lon.toFixed(2)}`;
+          }
+        }).catch(err=>{
+          console.warn('Geocode error', err);
+          $('weather-location').textContent = `Lat:${lat.toFixed(2)}, Lon:${lon.toFixed(2)}`;
+        });
       }
 
       function fetchWeather(lat, lon) {
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
-        fetch(url).then(r => r.json()).then(json => {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&temperature_unit=fahrenheit&timezone=auto`;
+        fetch(url).then(r=>r.json()).then(json=>{
           updateWidget(json, lat, lon);
-        }).catch(err => {
+          fetchReverseGeocode(lat, lon);
+        }).catch(err=>{
           console.error('Weather fetch error', err);
           showError('Unable to fetch');
         });
