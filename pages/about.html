@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Katie Larson - Designer and Creative Professional">
+  <title>About | Katie Larson</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .about-hero {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+      color: var(--white);
+      padding: 4rem 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .about-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-hero p {
+      font-size: 1.1rem;
+      color: #bdc3c7;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .about-section {
+      margin: 4rem 0;
+      line-height: 1.8;
+    }
+
+    .about-section h3 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .about-section h3::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent-color);
+      bottom: -10px;
+      left: 0;
+    }
+
+    .about-section p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .experience-timeline {
+      margin: 3rem 0;
+      padding: 2rem;
+      background-color: var(--light-bg);
+      border-radius: 10px;
+    }
+
+    .timeline-item {
+      margin-bottom: 2.5rem;
+      padding-left: 2rem;
+      border-left: 3px solid var(--accent-color);
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      background-color: var(--accent-color);
+      border-radius: 50%;
+      border: 3px solid var(--white);
+    }
+
+    .timeline-item .year {
+      color: var(--accent-color);
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item h4 {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item p {
+      color: var(--text-light);
+      margin: 0;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .value-card {
+      background-color: var(--light-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .value-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .value-card .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .value-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .value-card p {
+      color: var(--text-light);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .testimonials {
+      background-color: var(--light-bg);
+      padding: 3rem 2rem;
+      border-radius: 10px;
+      margin: 3rem 0;
+    }
+
+    .testimonials h3 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial {
+      background-color: var(--white);
+      padding: 2rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .testimonial-text {
+      color: var(--text-light);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .testimonial-role {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+      color: var(--white);
+      border-radius: 10px;
+      margin-top: 4rem;
+    }
+
+    .cta-section h3 {
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section h3::after {
+      display: none;
+    }
+
+    .cta-section p {
+      font-size: 1.1rem;
+      color: #bdc3c7;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">Katie<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="../index.html#portfolio">Portfolio</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- About Hero -->
+  <section class="about-hero">
+    <h1>About Katie</h1>
+    <p>A designer passionate about creating meaningful experiences that solve real problems</p>
+  </section>
+
+  <!-- Main Content -->
+  <section>
+    <div class="container">
+      <div class="about-section">
+        <h3>My Story</h3>
+        <p>I'm a designer with over 8 years of experience creating digital experiences that matter. My journey started with a simple fascination with how things work and how they look. That curiosity evolved into a career dedicated to bridging the gap between beautiful design and intuitive functionality.</p>
+        <p>I believe that great design is problem-solving at its finest. It's not just about making things pretty—it's about understanding user needs, anticipating pain points, and crafting solutions that feel effortless. Every project I work on is an opportunity to create something that genuinely improves someone's day.</p>
+        <p>My background spans UI/UX design, branding, web design, and design strategy. I've had the privilege of working with startups, established corporations, and everything in between. This diverse experience has shaped my approach to design—flexible, collaborative, and always rooted in user research.</p>
+      </div>
+
+      <div class="about-section">
+        <h3>Design Philosophy</h3>
+        <div class="values">
+          <div class="value-card">
+            <div class="icon">🎯</div>
+            <h4>User-Centric</h4>
+            <p>Every design decision starts with understanding the user. Research drives strategy.</p>
+          </div>
+          <div class="value-card">
+            <div class="icon">✨</div>
+            <h4>Elegant Simplicity</h4>
+            <p>Complexity should be invisible. Great design is intuitive and effortless.</p>
+          </div>
+          <div class="value-card">
+            <div class="icon">🔗</div>
+            <h4>Collaboration</h4>
+            <p>The best ideas emerge from diverse perspectives. I believe in working closely with teams.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section">
+        <h3>Professional Journey</h3>
+        <div class="experience-timeline">
+          <div class="timeline-item">
+            <div class="year">2023 - Present</div>
+            <h4>Senior Design Lead</h4>
+            <p>Leading design strategy and team at a growing fintech company. Responsible for product direction, design systems, and user experience across multiple platforms.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2020 - 2023</div>
+            <h4>Product Designer</h4>
+            <p>Designed user experiences for web and mobile applications at a fast-growing tech startup. Conducted user research and led design iterations based on real user feedback.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2018 - 2020</div>
+            <h4>UI/UX Designer</h4>
+            <p>Started career designing interfaces and conducting usability research for digital products. Developed strong foundation in design thinking and user research methodologies.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="year">2017</div>
+            <h4>Design Education</h4>
+            <p>Completed intensive UX Design bootcamp and earned certification in Design Thinking. Passionate about continuous learning and staying current with design trends.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonials">
+        <h3>What People Say</h3>
+        <div class="testimonials-grid">
+          <div class="testimonial">
+            <div class="testimonial-text">"Katie has an exceptional ability to translate complex requirements into elegant, user-friendly designs. She combines creativity with analytical thinking in a way that's truly rare."</div>
+            <div class="testimonial-author">Alex Thompson</div>
+            <div class="testimonial-role">Product Manager, TechVenture</div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-text">"Working with Katie was transformative for our brand. She understood our vision and elevated it beyond what we imagined. The results speak for themselves."</div>
+            <div class="testimonial-author">Sarah Chen</div>
+            <div class="testimonial-role">Founder, StartupHub</div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-text">"Katie's attention to detail and user empathy is unmatched. Every design decision she makes is thoughtful, purposeful, and grounded in real user insights."</div>
+            <div class="testimonial-author">Marcus Johnson</div>
+            <div class="testimonial-role">CEO, DesignInnovate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section">
+        <h3>Skills & Expertise</h3>
+        <p><strong>Design Areas:</strong> UI/UX Design, Product Design, Web Design, Brand Design, Interaction Design, User Research, Wireframing, Prototyping, Design Systems</p>
+        <p><strong>Tools & Software:</strong> Figma, Adobe Creative Suite (Photoshop, Illustrator, XD), Sketch, Framer, Webflow, InVision, Miro</p>
+        <p><strong>Methodologies:</strong> Design Thinking, User-Centered Design, Agile Design, Design Systems, A/B Testing, UX Research, Competitive Analysis</p>
+      </div>
+
+      <div class="cta-section">
+        <h3>Ready to Create Something Amazing?</h3>
+        <p>Let's collaborate and bring your vision to life</p>
+        <a href="../index.html#contact" class="btn btn-primary">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Katie Larson. All rights reserved.</p>
+    <p>Designed & Built with creativity ✨</p>
+    <div class="social-links">
+      <a href="https://linkedin.com" target="_blank" title="LinkedIn">in</a>
+      <a href="https://twitter.com" target="_blank" title="Twitter">𝕏</a>
+      <a href="https://dribbble.com" target="_blank" title="Dribbble">D</a>
+    </div>
+  </footer>
+</body>
+</html>
