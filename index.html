@@ -8,14 +8,30 @@
   <link rel="stylesheet" href="css/style.css">
   <style>
     /* Weather widget styles */
-    .weather-card {
+    .weather-container {
       margin: calc(1.5rem + 40px) auto 0;
+      width: 100%;
+      max-width: 680px;
       background: var(--white);
+      border-radius: 12px;
+      padding: 0.6rem;
+      box-shadow: 0 14px 40px rgba(44,62,80,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .weather-card {
+      margin: 0;
+      background: transparent;
       color: var(--text-dark);
       width: 280px;
+      max-width: 100%;
       border-radius: 12px;
       padding: 0.9rem 1rem;
-      box-shadow: 0 12px 30px rgba(44,62,80,0.12);
+      box-shadow: none;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -56,25 +72,42 @@
     }
 
     @media (max-width: 480px) {
+      .weather-container { padding: 0.5rem; }
       .weather-card { width: 100%; max-width: 320px; }
     }
+    .weather-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 2px;
+      margin: 0.2rem 0;
+    }
     /* Forecast strip */
+
     .forecast {
       display: flex;
-      gap: 0.6rem;
-      justify-content: center;
+      gap: 0;
+      justify-content: stretch;
       margin: 1rem auto 0;
       width: 100%;
       max-width: 680px;
+      background: transparent;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .forecast-day {
-      background: var(--light-bg);
-      border-radius: 10px;
+      background: var(--white);
+      border-radius: 0;
       padding: 0.6rem 0.8rem;
-      min-width: 88px;
+      flex: 1 1 0;
+      min-width: 0;
       text-align: center;
-      box-shadow: 0 6px 18px rgba(44,62,80,0.06);
+      box-shadow: none;
+    }
+
+    .forecast-day + .forecast-day {
+      border-left: 1px solid rgba(0,0,0,0.06);
     }
 
     .forecast-day .day { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.2rem; }
@@ -107,22 +140,25 @@
         <a href="#portfolio" class="btn btn-primary">View My Work</a>
         <a href="#contact" class="btn btn-secondary">Get In Touch</a>
       </div>
-      <!-- Weather widget -->
-      <div id="weather" class="weather-card" aria-live="polite">
-        <div class="weather-left">
-          <div id="weather-emoji" class="weather-emoji">⛅</div>
-          <div class="weather-info">
-            <div id="weather-temp" class="weather-temp">--°F</div>
-            <div id="weather-desc" class="weather-desc">Loading weather…</div>
+      <!-- Weather widget (current + 5-day forecast in one container) -->
+      <div class="weather-container" role="region" aria-label="Local weather">
+        <div id="weather" class="weather-card" aria-live="polite">
+          <div class="weather-left">
+            <div id="weather-emoji" class="weather-emoji">⛅</div>
+            <div class="weather-info">
+              <div id="weather-temp" class="weather-temp">--°F</div>
+              <div id="weather-desc" class="weather-desc">Loading weather…</div>
+            </div>
+          </div>
+          <div class="weather-meta">
+            <div id="weather-location">—</div>
+            <div id="weather-time">—</div>
           </div>
         </div>
-        <div class="weather-meta">
-          <div id="weather-location">—</div>
-          <div id="weather-time">—</div>
-        </div>
+        <div class="weather-divider" aria-hidden="true"></div>
+        <!-- 5-day forecast strip -->
+        <div id="weather-forecast" class="forecast" aria-hidden="true"></div>
       </div>
-      <!-- 5-day forecast -->
-      <div id="weather-forecast" class="forecast" aria-hidden="true"></div>
     </div>
   </section>
 
